@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  testepilotti:
+    build:
+      context: .              # <- pasta onde está o Dockerfile (a de fora)
+      dockerfile: ./Dockerfile
+    container_name: testepilotti
+    restart: always
+    networks: [web, db]
+    volumes:
+      # você está em /root/public; seus arquivos estão na subpasta ./public
+      - ./testepilotti:/var/www/public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+
+
+      # loja
+      - 'traefik.http.routers.testepilotti.rule=Host(`teste.naturaldobem.com.br`)'
+      - "traefik.http.routers.testepilotti.entrypoints=websecure"
+      - "traefik.http.routers.testepilotti.tls=true"
+      - "traefik.http.routers.testepilotti.tls.certresolver=letsencrypt"
+
+      # backend
+      - "traefik.http.services.testepilotti.loadbalancer.server.port=80"
+
+
+
+networks:
+  db:
+    external: true
+  web:
+    external: true

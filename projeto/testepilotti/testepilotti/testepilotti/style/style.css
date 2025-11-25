@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+}
+
+header {
+    background-color: #ccc;
+    width: 100%;
+    height: 100px;
+    position: relative;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.54) 0px 3px 8px;
+}
+
+.form-login{
+    width: 70%;
+    height: 400px;
+    position: relative;
+    top: 100px;
+    border-radius: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ccc;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.54) 0px 3px 8px;
+}
+
+.form-login input{
+    padding: 7px;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.form-login a{
+    text-decoration: none;
+    font-weight: 600;
+    color: #797979;
+}
+
+.form-registro{
+    width: 70%;
+    height: 400px;
+    position: relative;
+    top: 100px;
+    border-radius: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ccc;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.54) 0px 3px 8px;
+}
+
+.form-registro input{
+    padding: 7px;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.form-registro a{
+    text-decoration: none;
+    font-weight: 600;
+    color: #797979;
+}
+
+#msg{
+    width: 70%;
+    height: 50px;
+    position: relative;
+    top: 150px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tarefas-container {
+    width: 100%;
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #ffffff10;
+    backdrop-filter: blur(10px);
+    border: 1px solid #ffffff20;
+    border-radius: 18px;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.15);
+    animation: fadeIn 0.4s ease;
+}
+
+/* Título */
+.tarefas-container h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: black;
+    text-align: center;
+}
+
+/* Formulário */
+#novaTarefa {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Inputs e selects */
+#novaTarefa input,
+#novaTarefa textarea,
+#novaTarefa select {
+    width: 330px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid black;
+    background: #ffffff15;
+    color: black;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+#novaTarefa input:focus,
+#novaTarefa textarea:focus,
+#novaTarefa select:focus {
+    border-color: #6fd3ff;
+    background: #ffffff25;
+}
+
+/* Botão */
+#novaTarefa button {
+    background: linear-gradient(135deg, #6fd3ff, #2b9dff);
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #000;
+    transition: 0.25s;
+}
+
+#novaTarefa button:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 0px 12px #6fd3ff80;
+}
+
+/* Lista de tarefas */
+#listaTarefas {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Card da tarefa */
+.tarefa {
+    background: #ffffff08;
+    border: 1px solid #ffffff20;
+    padding: 18px;
+    border-radius: 15px;
+    color: black;
+    animation: fadeIn 0.4s ease;
+}
+
+/* Estados de tarefa */
+.tarefa.pendente {
+    border-left: 4px solid #ffc107;
+}
+
+.tarefa.progresso {
+    border-left: 4px solid #17a2b8;
+}
+
+.tarefa.concluida {
+    border-left: 4px solid #28a745;
+    opacity: 0.6;
+}
+
+/* Conteúdo da tarefa */
+.tarefa h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.tarefa p {
+    margin: 3px 0;
+    opacity: 0.9;
+}
+
+/* Select dentro da tarefa */
+.tarefa select {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    background: #4b4b4b;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: black;
+}
+
+/* Botão excluir */
+.tarefa button {
+    margin-top: 12px;
+    width: 100%;
+    padding: 10px;
+    background: #ff4747;
+    border: none;
+    border-radius: 10px;
+    color: black;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.tarefa button:hover {
+    background: #ff2f2f;
+}
+
+/* Animação */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
