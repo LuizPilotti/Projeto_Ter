@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  db:
+    image: postgres:16
+    container_name: fastpoint_postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=senha123
+      - POSTGRES_DB=fastpointdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data_v16:/var/lib/postgresql/data
+
+volumes:
+  postgres_data_v16: {}

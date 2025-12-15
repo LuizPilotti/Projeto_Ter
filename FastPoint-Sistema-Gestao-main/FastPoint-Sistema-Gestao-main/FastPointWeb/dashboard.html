@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - FastPoint</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-dark mb-4">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">🍔 FastPoint Gestão</span>
+            <button onclick="logout()" class="btn btn-outline-light btn-sm">Sair</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4">Cardápio & Estoque</h2>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Novo Produto</h5>
+                <form id="formProduto" class="row g-3">
+                    <div class="col-md-5">
+                        <input type="text" id="nome" class="form-control" placeholder="Nome do Produto (ex: X-Salada)" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" id="preco" class="form-control" placeholder="Preço (0.00)" step="0.01" required>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" id="qtd" class="form-control" placeholder="Qtd" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success w-100">Adicionar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table class="table table-striped table-hover shadow-sm bg-white rounded">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaProdutos">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:5010/api"; 
+        const token = localStorage.getItem("token");
+
+        // Se não tiver token, chuta pro login
+        if (!token) window.location.href = "index.html";
+
+        // Carregar Produtos ao abrir
+        async function carregarProdutos() {
+            const res = await fetch(`${API_URL}/Produtos`, {
+                headers: { "Authorization": `Bearer ${token}` } // Envia o Token seguro
+            });
+            const produtos = await res.json();
+            
+            const tbody = document.getElementById("tabelaProdutos");
+            tbody.innerHTML = ""; // Limpa
+
+            produtos.forEach(p => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${p.id}</td>
+                        <td>${p.nome}</td>
+                        <td>R$ ${p.preco.toFixed(2)}</td>
+                        <td>${p.quantidadeEstoque}</td>
+                        <td>
+                            <button onclick="deletar(${p.id})" class="btn btn-danger btn-sm">🗑</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Cadastrar Produto
+        document.getElementById("formProduto").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const produto = {
+                nome: document.getElementById("nome").value,
+                preco: parseFloat(document.getElementById("preco").value),
+                quantidade: parseInt(document.getElementById("qtd").value)
+            };
+
+            const res = await fetch(`${API_URL}/Produtos?nome=${produto.nome}&preco=${produto.preco}&quantidade=${produto.quantidade}`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (res.ok) {
+                carregarProdutos(); // Recarrega a lista
+                document.getElementById("formProduto").reset();
+            } else {
+                alert("Erro ao salvar! Verifique se o preço é positivo.");
+            }
+        });
+
+        // Deletar
+        async function deletar(id) {
+            if (confirm("Tem certeza?")) {
+                await fetch(`${API_URL}/Produtos/${id}`, {
+                    method: "DELETE",
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                carregarProdutos();
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+
+        // Inicia carregando
+        carregarProdutos();
+    </script>
+</body>
+</html>
